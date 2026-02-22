@@ -1,9 +1,17 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response, Depends
 from  pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from authx import AuthX, AuthXConfig
+
 import uvicorn
 
+
 app = FastAPI()
+config = AuthXConfig()
+config.JWT_SECRET_KEY = "SECRET_KEY"
+config.JWT_ACCESS_COOKIE_NAME = "my_access_token"
+config.JWT_TOKEN_LOCATION = ["cookies"]
+security = AuthX(config=config)
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,38 +22,25 @@ app.add_middleware(
 )
 
 
-books = [
-    {"id":1,
-     "title": "Колобок",
-     "author": "Народ",
-    },
-    {"id":2,
-     "title": "Золотая рыбка",
-     "author": "Пушкин"
-     }
-]
-
-class NewBook(BaseModel):
-    title: str
-    author: str
+class UserLoginSchema(BaseModel):
+    username: str
+    password: str
 
 
-@app.get("/books", tags=["Книги"], summary=["Получить все книги"])
-def root():
-    return books
 
-@app.get("/books/{book_id}", tags=["Книги"], summary=["Получить конкретную книгу"])
-def get_book(book_id: int):
-    for book in books:
-        if book["id"] == book_id:
-            return book
-    raise HTTPException(status_code=404, detail="книга не найдена")
+@app.post("/login")
+def login(creds: UserLoginSchema, response: Response):
+    if creds.username == "test" and creds.password == "test":
+        token = security.create_access_token(uid="12345")
+        response.set_cookie(config.JWT_ACCESS_COOKIE_NAME, token)
+        return {"access_token": token}
+    raise HTTPException(status_code=401)
 
 
-@app.post("/books", tags=["Книги"])
-def create_book(new_book: NewBook):
-    books.append({"id": len(books) + 1, "title": new_book.title,"author": new_book.author})
-    return {"status": "succes"}
+@app.get("/protected", dependencies=[Depends(security.access_token_required)])
+def protected():
+    return {"data": "top secret"}
+
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",reload= True)
+    uvicorn.run("main:app", reload=True)
