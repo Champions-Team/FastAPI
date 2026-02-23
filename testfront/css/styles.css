@@ -1,4 +1,6 @@
 body {
+  overflow: hidden; /* запрет ВСЕХ скроллов */
+
   font-family: "Montserrat";
   font-weight: 300;
   font-size: 14px;
