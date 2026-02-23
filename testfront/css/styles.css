@@ -18,6 +18,10 @@ body {
   max-width: 300px;
   margin-inline: auto;
   margin-top: 160px;
+
+  /* Масштабируем всё содержимое */
+  transform: scale(1.25); /* Увеличение на 20% */
+  transform-origin: top center; /* Точка, откуда масштабируем */
 }
 
 .icon {
