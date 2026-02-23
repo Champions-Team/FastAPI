@@ -1,0 +1,120 @@
+body {
+  font-family: "Montserrat";
+  font-weight: 300;
+  font-size: 14px;
+  color: #fff;
+  background-color: #2148c0;
+  /* Путь к вашему SVG-файлу или коду */
+  background-image: url("pattern.svg");
+
+  /* 1. Запрещаем повторение (убираем квадраты) */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  max-width: 300px;
+  margin-inline: auto;
+  margin-top: 160px;
+}
+
+.icon {
+  pointer-events: none;
+  user-select: none;
+  display: block;
+  margin-inline: auto;
+  width: fit-content;
+  margin-bottom: 65px;
+}
+
+.inputone,
+.inputtwo {
+  position: relative; /* ← ОСТАЕТСЯ */
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.inputone input,
+.inputtwo input {
+  width: 100%;
+  height: 45px;
+  background-color: transparent;
+  border: 1px solid #fff;
+  outline: none;
+  border-radius: 8px;
+  padding: 12px 16px 12px 50px; /* ← ТОЛЬКО ОДИН RAZ */
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 143%;
+  color: #fff;
+  /* УБРАЛ margin-bottom и position: relative */
+}
+
+.inputone input::placeholder,
+.inputtwo input::placeholder {
+  color: #fff;
+}
+
+.inputone input:focus,
+.inputtwo input:focus {
+  border-color: #fff;
+}
+
+.input_icon_one,
+.input_icon_two {
+  position: absolute;
+  user-select: none;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.confirm {
+  width: 100%;
+  border-radius: 4px;
+  background-color: #fff;
+  height: 45px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  color: #2148c0; /* цвет фона body */
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  text-transform: uppercase;
+  text-align: center;
+  color: #2148c0;
+  margin-bottom: 20px;
+}
+
+.forgot_pass {
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  text-align: right;
+  display: block;
+}
+
+.input_icon_one {
+  position: absolute;
+  user-select: none;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* иконка не мешает вводу */
+}
+
+.input_icon_two {
+  position: absolute;
+  user-select: none;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* иконка не мешает вводу */
+}
