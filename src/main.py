@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Response, Depends
 from  pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from authx import AuthX, AuthXConfig
-
+import psycopg2
 import uvicorn
 
 
@@ -12,6 +12,9 @@ config.JWT_SECRET_KEY = "SECRET_KEY"
 config.JWT_ACCESS_COOKIE_NAME = "my_access_token"
 config.JWT_TOKEN_LOCATION = ["cookies"]
 security = AuthX(config=config)
+
+
+
 
 app.add_middleware(
     CORSMiddleware,
